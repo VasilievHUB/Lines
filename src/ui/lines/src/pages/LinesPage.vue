@@ -1,16 +1,18 @@
 <template>
-<NavBar></NavBar>
-<div><router-view></router-view></div>
+ <AddLineForm :axios='axios'/>
+ <LinesTable :axios='axios'/>
 </template>
 
 <script>
 import axios from 'axios'
-import NavBar from "@/components/NavBar";
+import LinesTable from '../components/LinesTable.vue'
+import AddLineForm from '../components/AddLineForm.vue'
 
 export default {
   name: 'App',
   components: {
-    NavBar
+    LinesTable,
+    AddLineForm
 },
 data(){
   return{

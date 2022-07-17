@@ -34,3 +34,4 @@ build/
 
 ### project ###
 /src/ui/lines/node_modules/
+/bin/

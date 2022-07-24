@@ -35,7 +35,7 @@ export default {
           )
         },
         edit: function(id){
-          console.log(id+"fromtable")
+          
           store.commit('idToEdit', id)
           }
     },

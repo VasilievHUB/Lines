@@ -3,13 +3,19 @@
     <div @click="$router.push('/')">Lines</div>
     <div class="navbar__btns">
       <my-button @click="$router.push('/LinesPage')">Работа с линиями</my-button>
+      <my-button @click="$router.push('/SubsPage')">Работа с ПС</my-button>
+      <my-button @click="$router.push('/OscillogramView')">Работа с осциллограммами</my-button>
       <my-button style="margin-left: 20px" @click="$router.push('/about')">О сайте</my-button>
     </div>
   </div>
 </template>
 
 <script>
+import MyButton from './UI/MyButton.vue'
 export default {
+  components:{
+    MyButton
+  }
 }
 </script>
 

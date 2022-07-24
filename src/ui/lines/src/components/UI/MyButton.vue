@@ -17,4 +17,10 @@ export default {
   color: teal;
   border: 1px solid teal;
 }
+.btn:hover{
+  padding: 10px 15px;
+  background: none;
+  color: rgb(149, 168, 168);
+  border: 1px solid teal;
+}
 </style>

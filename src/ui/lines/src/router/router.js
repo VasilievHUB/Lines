@@ -1,5 +1,7 @@
 import MainPage from '@/pages/MainPage';
 import LinesPage from '@/pages/LinesPage';
+import SubsPage from '@/pages/SubsPage';
+import OscillogramView from '@/pages/OscillogramView';
 import {createRouter, createWebHistory} from "vue-router"
 
 const routes= [
@@ -10,6 +12,14 @@ const routes= [
 {
     path: '/LinesPage',
     component: LinesPage
+},
+{
+    path: '/SubsPage',
+    component: SubsPage
+},
+{
+    path: '/OscillogramView',
+    component: OscillogramView
 },
 ]
 

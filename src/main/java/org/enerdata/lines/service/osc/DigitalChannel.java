@@ -1,26 +1,25 @@
 package org.enerdata.lines.service.osc;
 
-public class DigitalChannel implements Channel {
+public class DigitalChannel extends Channel {
 
 	
-	private int id;
-	private int number;
 	private int normalCondition;
-	public int getNumber() {
-		return number;
+	private byte[] values;
+	
+	public byte[] getValues() {
+		return values;
 	}
-	public void setNumber(int number) {
-		this.number = number;
+	public void setValues(byte[] values) {
+		this.values = values;
 	}
+	
 	public int getNormalCondition() {
 		return normalCondition;
 	}
 	public void setNormalCondition(int normalCondition) {
 		this.normalCondition = normalCondition;
 	}
-	public int getId() {
-		return id;
-	}
+
 	
 	
 }

@@ -22,24 +22,35 @@ public class OscillogrammController {
 
 	@PostMapping("/upload")
 	@ResponseBody
-	public String uploadOsc(@RequestParam("cfg") MultipartFile cfgFile, @RequestParam("dat") MultipartFile datFile) {
+	public Oscillogramm uploadOsc(@RequestParam("cfg") MultipartFile cfgFile, @RequestParam("dat") MultipartFile datFile) {
 
 		if(!cfgFile.isEmpty()) {
 			
 			try {
-				Oscillogramm osc = OscillogrammUtils.getOscFromComtrade(cfgFile.getInputStream(), null);
-				byte[] bytes = cfgFile.getBytes();
+				//Сохраняем файлы в нужную папку
 				//TODO Место хранения осциллограмм подтягивать из файла конфигурации
-				BufferedOutputStream bo = new BufferedOutputStream(new FileOutputStream(new File("C:\\tempJavaStorage\\" + cfgFile.getOriginalFilename())));
+				File cfgStoreFile = new File("C:\\tempJavaStorage\\" + cfgFile.getOriginalFilename());
+				File dataStoreFile = new File("C:\\tempJavaStorage\\" + datFile.getOriginalFilename());
 				
+				byte[] bytes = cfgFile.getBytes();
+				BufferedOutputStream bo = new BufferedOutputStream(new FileOutputStream(cfgStoreFile));
 				bo.write(bytes);
 				bo.close();
+				bytes = datFile.getBytes();
+				bo = new BufferedOutputStream(new FileOutputStream(dataStoreFile));
+				bo.write(bytes);
 				
+				bo.close();
+				Oscillogramm osc = OscillogrammUtils.getOscFromComtrade(cfgStoreFile, dataStoreFile);
+				
+				return osc;
 				} catch (Exception e) {
-					return e.toString();
+					System.out.println(e.toString());
+					//return e.toString();
 				}
-		} else return cfgFile.getOriginalFilename() + "файл пустой";
-		return "Загружен файл " + cfgFile.getOriginalFilename();
+		}
+		return null;
+		//return null;
 		
 	}
 	

@@ -1,9 +1,8 @@
 package org.enerdata.lines.service.osc;
 
-public class AnalogChannel implements Channel {
+public class AnalogChannel extends Channel {
 	
-	private int id;
-	private int number;
+	
 	private String phase;
 	private String circut;
 	private String units;
@@ -12,12 +11,18 @@ public class AnalogChannel implements Channel {
 	private double skew;
 	private int min;
 	private int max;
-	public int getNumber() {
-		return number;
+	private double primaryVal;
+	private double secondoryVal;
+	private String primeSecondVal;
+	private double[] values;
+	
+	public double[] getValues() {
+		return values;
 	}
-	public void setNumber(int number) {
-		this.number = number;
+	public void setValues(double[] values) {
+		this.values = values;
 	}
+	
 	public String getPhase() {
 		return phase;
 	}
@@ -66,9 +71,26 @@ public class AnalogChannel implements Channel {
 	public void setMax(int max) {
 		this.max = max;
 	}
-	public int getId() {
-		return id;
+	public double getPrimaryVal() {
+		return primaryVal;
 	}
+	public void setPrimaryVal(double primaryVal) {
+		this.primaryVal = primaryVal;
+	}
+	public double getSecondoryVal() {
+		return secondoryVal;
+	}
+	public void setSecondoryVal(double secondoryVal) {
+		this.secondoryVal = secondoryVal;
+	}
+	public String getPrimeSecondVal() {
+		return primeSecondVal;
+	}
+	public void setPrimeSecondVal(String primeSecondVal) {
+		this.primeSecondVal = primeSecondVal;
+	}
+	
+
 
 	
 }

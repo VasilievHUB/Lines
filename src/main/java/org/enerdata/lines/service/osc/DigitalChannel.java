@@ -4,12 +4,12 @@ public class DigitalChannel extends Channel {
 
 	
 	private int normalCondition;
-	private byte[] values;
+	private short[] values;
 	
-	public byte[] getValues() {
+	public short[] getValues() {
 		return values;
 	}
-	public void setValues(byte[] values) {
+	public void setValues(short[] values) {
 		this.values = values;
 	}
 	

@@ -78,7 +78,7 @@ public class OscillogrammUtils {
 			osc.setTriggerPointTime(br.readLine());
 			osc.setDataFileFormat(br.readLine().trim().toUpperCase());
 			osc.setTimeMultiplication(Integer.parseInt(br.readLine().trim().substring(0, 1)));
-			osc.setValusFromBinDat();
+			osc.setValuesFromBinDat();
 			
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block

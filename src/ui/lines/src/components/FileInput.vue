@@ -11,15 +11,22 @@
       </div>
     </div>
   </div>
+      <OscChannel v-if="this.showOsc">
+
+    </OscChannel>
 </template>
 <script>
 import axios from 'axios'
+import OscChannel from './OscChannel.vue';
   export default {
-      name: 'LinesTable',
-      
+      name: 'FileInput',
+              components:{
+            OscChannel
+        },
     data(){
       return {
-        files: []
+        files: [],
+        showOsc: false
       }
     },
     methods: {
@@ -35,8 +42,11 @@ import axios from 'axios'
                     'Content-Type': 'multipart/form-data'
                 }
               }
-            ).then(result=>
-            console.log(result))
+            ).then(result=>{
+              //console.log(result)
+              this.$emit('oscGet', result )         
+            }
+            )
         .catch(function(){
           console.log('FAILURE!!');
         });
@@ -62,6 +72,7 @@ import axios from 'axios'
               this.files = []
               }
       }
-    }
+    },
+
   }
 </script>

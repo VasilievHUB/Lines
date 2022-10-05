@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.enerdata.lines.service.osc.AnalogChannel;
 import org.enerdata.lines.service.osc.Channel;
+import org.enerdata.lines.service.osc.DigitalChannel;
 
 public class Oscillogramm {
 	
@@ -148,9 +149,8 @@ public class Oscillogramm {
 	public void setTimeMultiplication(int timeMultiplication) {
 		this.timeMultiplication = timeMultiplication;
 	}
-	public void setValusFromBinDat() {
+	public void setValuesFromBinDat() {
 		int offset=(this.getAnalogChannelQuantity()+(this.getDigitalChannelQuantity()+15)/16)*2+8;
-		System.out.println(Integer.toBinaryString(0|(byte)1<<8));
 		try(RandomAccessFile raf=new RandomAccessFile(this.pathToDATFile, "r")){
 		this.setTimePoints(new ArrayList<>());	
 		
@@ -165,19 +165,35 @@ public class Oscillogramm {
 			this.getTimePoints().add((i1|i2|i3|i4)*this.getTimeMultiplication());
 			
 		}
-		
-		this.setChannels(new ArrayList<>());
+		//Получить аналоговые каналы (реальные значения)
 		for(int i = 0; i < this.getAnalogChannelQuantity();i++) {
-			this.getChannels().add(new AnalogChannel());
-			((AnalogChannel) this.getChannels().get(i)).setValues(new double[(int) (raf.length()/offset)]);
+			
+			AnalogChannel tmpChannel = (AnalogChannel) this.getChannels().get(i);
+			tmpChannel.setValues(new double[(int) (raf.length()/offset)]);
+			
 			for(int j = 0; j < raf.length()/offset;j++) {
-				raf.seek(offset*j+8+(this.getChannels().size()));
+				raf.seek(offset*j+8+i*2);
 				int i1=raf.read();
 				int i2=raf.read()<<8;
-				
-				((AnalogChannel) this.getChannels().get(i)).getValues()[j]=(i1|i2);
-				System.out.println(((AnalogChannel) this.getChannels().get(i)).getValues()[j]);
+				short tmpValue = (short) (0|i1|i2);				
+				tmpChannel.getValues()[j]=(tmpValue*tmpChannel.getA()+tmpChannel.getB());
 			}
+			this.getChannels().set(i, tmpChannel);
+		}
+		
+		//Получить дискретные каналы
+		for(int i = 0; i < this.getDigitalChannelQuantity();i++) {
+			
+			DigitalChannel tmpChannel = (DigitalChannel) this.getChannels().get(this.getAnalogChannelQuantity()+i);
+			tmpChannel.setValues(new short[(int) (raf.length()/offset)]);
+			
+			for(int j = 0; j < raf.length()/offset;j++) {
+				int currentByte=i/8;
+				raf.seek(offset*j+8+this.getAnalogChannelQuantity()*2+currentByte);
+				byte i1=(byte) ((byte) ((raf.read()>>(i-currentByte*8))&1));
+				tmpChannel.getValues()[j]=(short) i1;
+			}
+			this.getChannels().set(i+this.getAnalogChannelQuantity(), tmpChannel);
 		}
 			
 		} catch (IOException e) {

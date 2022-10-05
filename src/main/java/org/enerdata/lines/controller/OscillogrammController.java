@@ -46,11 +46,9 @@ public class OscillogrammController {
 				return osc;
 				} catch (Exception e) {
 					System.out.println(e.toString());
-					//return e.toString();
 				}
 		}
 		return null;
-		//return null;
 		
 	}
 	
